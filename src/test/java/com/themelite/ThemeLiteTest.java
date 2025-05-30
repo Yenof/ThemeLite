@@ -1,13 +1,13 @@
-package com.example;
+package com.themelite;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public class ExamplePluginTest
+public class ThemeLiteTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(ExamplePlugin.class);
+		ExternalPluginManager.loadBuiltin(ThemeLite.class);
 		RuneLite.main(args);
 	}
 }
