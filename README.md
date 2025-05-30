@@ -1,10 +1,11 @@
-# ThemeLite
+![themeLitepicfix](https://github.com/user-attachments/assets/287edeb5-a506-43a8-b0e9-f7fac6ae472e)
+<br>
 Welcome to ThemeLite, a plugin which crudely recolors elements of the RuneLite client window.
 
 Customize the Titlebar and Sidebar colors, for better or worse!
 
 
-_*Currently, while switching RuneLite config profiles ThemeLite has been known to cause delays. (do not switch profiles in unsafe areas.)
+_*Currently, while switching RuneLite config profiles ThemeLite has been known to cause delays. (do not switch profiles in unsafe areas.)<br>
 *ThemeLite requires RuneLite's Custom Chrome for many things, to enable go to: `Config > RuneLite > Enable custom window chrome`._
 
 
