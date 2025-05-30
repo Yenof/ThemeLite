@@ -61,10 +61,10 @@ _The Sidepanel settings on occasion affect the config tab of plugins, currently 
 <br>
 Extra:
 
-The "Extra" group contains `Custom UIManager Strings` which will allow you to enter strings like `TitlePane.background #A21212` to recolor interface elements currently unsupported by ThemeLite.
-You can enter multiple strings separated by commas.
-`Custom UIManager Strings` is intended as a way to crowdsource desirable UIManager strings.
-If you find a UIManager string that you think would be nice to add to ThemeLite, please comment on the GitHub issue "UIManager Strings", or use Discord contact info below.
+The "Extra" group contains `Custom UIManager Strings` which will allow you to enter strings like `TitlePane.background #A21212` to recolor interface elements currently unsupported by ThemeLite.<br>
+You can enter multiple strings separated by commas.<br>
+`Custom UIManager Strings` is intended as a way to crowdsource desirable UIManager strings.<br>
+If you find a UIManager string that you think would be nice to add to ThemeLite, please comment on the GitHub issue "UIManager Strings", or use Discord contact info below.<br>
 
 
 # Notes
@@ -72,3 +72,10 @@ If you find a UIManager string that you think would be nice to add to ThemeLite,
 If you are reading this then ThemeLite is very early in development; while I have tried to find all the bugs and weirdness I can, do expect to find some, and feel free to report them on GitHub issues.
 
 Theme sharing hopefully coming someday.
+<br>
+ 
+<br>
+I love feedback, please feel free to reach out with any comments, concerns, or questions to @Yenofthunder on Discord. :D
+or
+Issues can be posted to Github Issues.
+Suggestions can be posted to Github Discussions. 
