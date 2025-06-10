@@ -1,4 +1,5 @@
-![themeLitepicfix](https://github.com/user-attachments/assets/287edeb5-a506-43a8-b0e9-f7fac6ae472e)
+![ThemeLitePicture](https://github.com/user-attachments/assets/a55eef4c-0aba-44b5-bd5b-fc6d8af133ff)
+
 <br>
 Welcome to ThemeLite, a plugin which crudely recolors elements of the RuneLite client window.
 
@@ -12,10 +13,14 @@ _*Currently, while switching RuneLite config profiles ThemeLite has been known t
 
 # Getting Started
 
+_Please be patient while changing ThemeLite settings or switching profiles, it redraws parts of the client window on changes and can take a moment._
+
+<br>
+
 The Themes config option contains a few pre-made themes to give you some ideas.
 Any other config options apply _after_ Themes, so you can override desired elements.
 
-_Please be patient while changing ThemeLite settings or switching profiles, it redraws the client window on changes and can take a moment._
+
 
 ThemeLite config options are split into groups based on the part of the interface being colored.
 The current groups are:
@@ -39,6 +44,7 @@ Toolbar - Color of the toolbar in the title bar. (Screenshot, Account, Sidebar b
 Title Bar Font Size - Font used in the title bar.<br>
 <br>
 Sidebar:<br>
+Border Color - This is the border color for the game window area and sidebar and panel.
 Sidebar Background – Background color of the sidebar/plugin toolbar.<br>
 Selected Tab – Color of the selected tab. (TabbedPane.selectedBackground)<br>
 Selection Indicator – Color of the line near the selected tab. (TabbedPane.inactiveUnderlineColor)<br>
@@ -75,7 +81,15 @@ Theme sharing hopefully coming someday.
 <br>
  
 <br>
-I love feedback, please feel free to reach out with any comments, concerns, or questions to @Yenofthunder on Discord. :D
-or
+
 Issues can be posted to Github Issues.
+<br>
 Suggestions can be posted to Github Discussions. 
+<br>
+or
+<br>
+I enjoy hearing feedback, you can also feel free to send any comments, concerns, or questions to the ThemeLite Discord. :D
+<br>
+<a href="https://discord.gg/AT44tqXVwH"><img src='https://img.shields.io/discord/1307357303099621426?color=B700FF&logoColor=%239b59b6&style=for-the-badge'/></a>
+
+
