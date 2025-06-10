@@ -1,6 +1,8 @@
 package com.themelite;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -89,6 +91,37 @@ public class ThemeHandler {
             }
 
             button.repaint();
+        }
+        if (comp instanceof JComponent) {
+            JComponent j = (JComponent) comp;
+            Border b = j.getBorder();
+
+            j.addPropertyChangeListener("border", evt -> { // The border changes back to default colors when minimized and restored without this.
+                Border current = j.getBorder();
+                if (current instanceof MatteBorder && config.innerBorder() == null) {
+                    MatteBorder mb = (MatteBorder) current;
+                    if (config.theme().getColor3() != null && !config.theme().getColor3().equals(mb.getMatteColor())) {
+                        j.setBorder(BorderFactory.createMatteBorder(
+                                mb.getBorderInsets().top,
+                                mb.getBorderInsets().left,
+                                mb.getBorderInsets().bottom,
+                                mb.getBorderInsets().right,
+                                config.theme().getColor3()
+                        ));
+                    }
+                }
+            });
+
+            if (b instanceof MatteBorder && config.innerBorder() == null) { // This 2nd config check is probably unnecessary.
+                MatteBorder old = (MatteBorder) b;
+                j.setBorder(BorderFactory.createMatteBorder(
+                        old.getBorderInsets().top,
+                        old.getBorderInsets().left,
+                        old.getBorderInsets().bottom,
+                        old.getBorderInsets().right,
+                        config.theme().getColor3()
+                ));
+            }
         }
         if (comp instanceof JLabel) {
             JLabel label = (JLabel) comp;

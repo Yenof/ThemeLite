@@ -180,6 +180,18 @@ public interface ThemeLiteConfig extends Config
 	}
 
 	@ConfigItem(
+			keyName = "innerBorder",
+			name = "Border Color",
+			description = "Color of the border (MatteBorder)<br>Not really a 'Sidebar' item, affects entire border.",
+			position = 0,
+			section = sidebarSection
+	)
+	default Color innerBorder()
+	{
+		return null;
+	}
+
+	@ConfigItem(
 			keyName = "sidebarBackgroundColor",
 			name = "Sidebar Background",
 			description = "Background color of the sidebar/plugin toolbar.",
@@ -232,13 +244,13 @@ public interface ThemeLiteConfig extends Config
 	@ConfigItem(
 			keyName = "sidebarThickness",
 			name = "Sidebar thickness",
-			description = "Thickness of the sidebar/plugin toolbar.",
+			description = "Thickness of the sidebar/plugin toolbar. (Try big increments, max size: 100)",
 			position = 12,
 			section = sidebarSection
 	)
 	default int sidebarThickness()
 	{
-		return 0;
+		return 5;
 	}
 
 	@ConfigItem(

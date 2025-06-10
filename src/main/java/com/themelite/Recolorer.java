@@ -2,6 +2,8 @@ package com.themelite;
 import net.runelite.client.ui.PluginPanel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -164,6 +166,36 @@ public class Recolorer extends PluginPanel {
                 label.setFont(defaultTitleFont.deriveFont(currentStyle, (float) config.sidePanelFontSize()));
             }
 
+        }
+
+        if (comp instanceof JComponent && config.innerBorder() != null) {
+            JComponent j = (JComponent) comp;
+            Border b = j.getBorder();
+            j.addPropertyChangeListener("border", evt -> { // The border changes back to default colors when minimized and restored without this.
+                Border current = j.getBorder();
+                if (current instanceof MatteBorder) {
+                    MatteBorder mb = (MatteBorder) current;
+                    if (config.innerBorder() != null && !config.innerBorder().equals(mb.getMatteColor())) {
+                        j.setBorder(BorderFactory.createMatteBorder(
+                                mb.getBorderInsets().top,
+                                mb.getBorderInsets().left,
+                                mb.getBorderInsets().bottom,
+                                mb.getBorderInsets().right,
+                                config.innerBorder()
+                        ));
+                    }
+                }
+            });
+            if (b instanceof MatteBorder) {
+                MatteBorder old = (MatteBorder) b;
+                j.setBorder(BorderFactory.createMatteBorder(
+                        old.getBorderInsets().top,
+                        old.getBorderInsets().left,
+                        old.getBorderInsets().bottom,
+                        old.getBorderInsets().right,
+                        config.innerBorder()
+                ));
+            }
         }
         if (comp instanceof Container)
         {

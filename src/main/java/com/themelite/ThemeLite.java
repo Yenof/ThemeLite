@@ -17,7 +17,7 @@ import java.awt.*;
 @PluginDescriptor(
 		name = "ThemeLite",
 		description = "Recolors client UI elements",
-		tags = "Theme, color, custom, chrome, ThemeLite, sidebar, title, bar, UI, skin, recolor"
+		tags = {"Theme", "color", "custom", "chrome", "ThemeLite", "sidebar", "title", "bar", "UI", "skin", "recolor", "accessibility", "Kalil"}
 )
 
 public class ThemeLite extends Plugin
