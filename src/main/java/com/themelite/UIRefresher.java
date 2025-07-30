@@ -9,6 +9,7 @@ public class UIRefresher
     {
         for (Window window : Window.getWindows()) // Very important.
         {
+            UIManager.put("TextField.border", BorderFactory.createEmptyBorder()); // I have no idea why it creates a border around the config search without this
             SwingUtilities.updateComponentTreeUI(window);
             repaintAll(window);
             window.invalidate();

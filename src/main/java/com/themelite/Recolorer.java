@@ -1,117 +1,132 @@
 package com.themelite;
-import net.runelite.client.ui.PluginPanel;
+
+import net.runelite.client.ui.ColorScheme;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-public class Recolorer extends PluginPanel {
-
-    private final ThemeLiteConfig config;
-    private static final Logger logger = LoggerFactory.getLogger(Recolorer.class);
+public class Recolorer {
+    private static ThemeLiteConfig config;
 
     public Recolorer(ThemeLiteConfig config) {
-        this.config = config;
-    }
+        Recolorer.config = config;}
 
-    private static void setUIManager(String key, Object value) {
-        if (value != null) {
-            UIManager.put(key, value);
+    public static void applyColors(ThemeLiteConfig config) {
+        ThemeLiteConfig.Themes selectedTheme = config.theme();
+        if (selectedTheme != null) {
+              if (config.titleBarTextColor() != null) {
+                  UIManager.put("TitlePane.foreground", config.titleBarTextColor());
+                  UIManager.put("TitlePane.activeForeground", config.titleBarTextColor());
+              } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                  UIManager.put("TitlePane.foreground", selectedTheme.getColor1());
+                  UIManager.put("TitlePane.activeForeground", selectedTheme.getColor1());
+              } else {
+                  UIManager.put("TitlePane.foreground", ColorScheme.TEXT_COLOR);
+                  UIManager.put("TitlePane.activeForeground", ColorScheme.TEXT_COLOR);
+              }
+
+              if (config.titlebarColor() != null) {
+                  UIManager.put("TitlePane.background", config.titlebarColor());
+              } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                  UIManager.put("TitlePane.background", selectedTheme.getColor3());
+              } else {
+                  UIManager.put("TitlePane.background", ColorScheme.CONTROL_COLOR);
+              }
+
+              if (config.titleBarInactiveBackground() != null) {
+                  UIManager.put("TitlePane.inactiveBackground", config.titleBarInactiveBackground());
+              } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                  UIManager.put("TitlePane.inactiveBackground", selectedTheme.getColor3());
+              } else {
+                  UIManager.put("TitlePane.inactiveBackground", ColorScheme.CONTROL_COLOR);
+              }
+
+              if (config.titleBarInactiveTextColor() != null) {
+                  UIManager.put("TitlePane.inactiveForeground", config.titleBarInactiveTextColor());
+              } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                  UIManager.put("TitlePane.inactiveForeground", selectedTheme.getColor1());
+              } else {
+                  UIManager.put("TitlePane.inactiveForeground", ColorScheme.LIGHT_GRAY_COLOR.darker());
+              }
+
+              if (config.selectedTabBackground() != null) {
+                  UIManager.put("TabbedPane.selectedBackground", config.selectedTabBackground());
+                  UIManager.put("TabbedPane.disabledBackground", config.selectedTabBackground());
+                  UIManager.put("TabbedPane.disabledForeground", config.selectedTabBackground());
+                  UIManager.put("TabbedPane.focusColor", config.selectedTabBackground());
+              } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                  UIManager.put("TabbedPane.selectedBackground", selectedTheme.getColor3());
+                  UIManager.put("TabbedPane.disabledBackground", selectedTheme.getColor3());
+                  UIManager.put("TabbedPane.disabledForeground", selectedTheme.getColor3());
+                  UIManager.put("TabbedPane.focusColor", selectedTheme.getColor3());
+              } else {
+                  UIManager.put("TabbedPane.selectedBackground", null);
+                  UIManager.put("TabbedPane.disabledBackground", null);
+                  UIManager.put("TabbedPane.disabledForeground", ColorScheme.LIGHT_GRAY_COLOR.darker());
+                  UIManager.put("TabbedPane.focusColor", null);
+              }
+
+              if (config.selectionLineColor() != null) {
+                  UIManager.put("TabbedPane.underlineColor", config.selectionLineColor());
+                  UIManager.put("TabbedPane.inactiveUnderlineColor", config.selectionLineColor());
+                  UIManager.put("TabbedPane.disabledUnderlineColor", config.selectionLineColor());
+              } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                  UIManager.put("TabbedPane.underlineColor", selectedTheme.getColor6());
+                  UIManager.put("TabbedPane.inactiveUnderlineColor", selectedTheme.getColor6());
+                  UIManager.put("TabbedPane.disabledUnderlineColor", selectedTheme.getColor6());
+              } else {
+                  UIManager.put("TabbedPane.underlineColor", ColorScheme.BRAND_ORANGE);
+                  UIManager.put("TabbedPane.inactiveUnderlineColor", ColorScheme.BRAND_ORANGE);
+                  UIManager.put("TabbedPane.disabledUnderlineColor", ColorScheme.BRAND_ORANGE);
+              }
+
+              if (config.scrollBarColor() != null) {
+                  UIManager.put("ScrollBar.thumb", config.scrollBarColor());
+              } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                  UIManager.put("ScrollBar.thumb", selectedTheme.getColor1());
+              } else {
+                  UIManager.put("ScrollBar.thumb", ColorScheme.MEDIUM_GRAY_COLOR);
+              }
+
+              if (config.scrollBarTrackColor() != null) {
+                  UIManager.put("ScrollBar.track", config.scrollBarTrackColor());
+              } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                  UIManager.put("ScrollBar.track", selectedTheme.getColor3());
+              } else {
+                  UIManager.put("ScrollBar.track", ColorScheme.SCROLL_TRACK_COLOR);
+              }
+
+              if (config.sidebarThickness() != 0){
+                  UIManager.put("TabbedPane.minimumTabWidth", config.sidebarThickness());
+              }
+
+              if (config.iconAlignment()){
+                  UIManager.put("TabbedPane.tabAreaAlignment", "center");
+              } else {
+                  UIManager.put("TabbedPane.tabAreaAlignment", "leading");
+
+              }
+              Font defaultTitleFont = UIManager.getFont("TitlePane.font");
+              if (defaultTitleFont != null)
+              {
+                  UIManager.put("TitlePane.font", defaultTitleFont.deriveFont((float) config.titleBarFontSize()));
+                  if (config.titleBarTextColor() != null) {
+                      UIManager.put("TitlePane.foreground", config.titleBarTextColor());
+                  } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                      UIManager.put("TitlePane.foreground", selectedTheme.getColor1());
+                  } else {
+                      UIManager.put("TitlePane.foreground", Color.WHITE);
+                  }
+              }
         }
     }
-
-    public static void applyColorToAllColors(ThemeLiteConfig config) {
-        if (config.theme() != ThemeLiteConfig.Themes.NONE)
-        {
-            ThemeHandler.applyColors(config);
-        }
-
-        setUIManager("TitlePane.foreground", config.titleBarTextColor()); // Title bar Title Text except for focused RuneLite, idk why. Exit buttons too.
-        setUIManager("TitlePane.activeForeground", config.titleBarTextColor()); // Inactive text color
-        setUIManager("TitlePane.background", config.titlebarColor()); // Active background
-        setUIManager("TitlePane.inactiveBackground", config.titleBarInactiveBackground()); // Inactive background
-        setUIManager("TitlePane.inactiveForeground", config.titleBarInactiveTextColor()); // Inactive text color
-
-
-        setUIManager("TabbedPane.selectedBackground", config.selectedTabBackground());// Sidebar selected tab
-        setUIManager("TabbedPane.disabledBackground", config.selectedTabBackground());
-        setUIManager("TabbedPane.disabledForeground", config.selectedTabBackground()); // Seems to need all of this or sometimes colors reset.
-        setUIManager("TabbedPane.focusColor", config.selectedTabBackground());
-        setUIManager("TabbedPane.underlineColor", config.selectionLineColor());
-        setUIManager("TabbedPane.inactiveUnderlineColor", config.selectionLineColor());
-        setUIManager("TabbedPane.disabledUnderlineColor", config.selectionLineColor());
-
-
-        setUIManager("ScrollBar.thumb", config.scrollBarColor()); // The scrollbar position indicator.
-        setUIManager("ScrollBar.track", config.scrollBarTrackColor());// What I would consider the scrollbar background.
-
-
-        if (config.sidebarThickness() != 0){
-            setUIManager("TabbedPane.minimumTabWidth", config.sidebarThickness()); // minimum width of tabs.
-        }
-//        if (config.scrollingSidebar()){
-//            setUIManagerProperty("TabbedPane.tabLayoutPolicy", "scroll"); // Scrollable sidebar, also entirely breaks the sidebar XD
-//            setUIManagerProperty("TabbedPane.tabsPopupPolicy", "never"); // Would be a cool feature someday though.
-//        } else {
-//            setUIManagerProperty("TabbedPane.tabLayoutPolicy", "wrap");
-//        }
-
-        if (config.iconAlignment()){
-            setUIManager("TabbedPane.tabAreaAlignment", "center");
-        } else {
-            setUIManager("TabbedPane.tabAreaAlignment", "leading");
-
-        }
-        Font defaultTitleFont = UIManager.getFont("TitlePane.font");
-        if (defaultTitleFont != null)
-        {
-            setUIManager("TitlePane.font", defaultTitleFont.deriveFont((float) config.titleBarFontSize()));
-            setUIManager("TitlePane.foreground", config.titleBarTextColor()); // Title bar Title Text color
-        }
-
-        SwingUtilities.invokeLater(() -> {
-            for (Window window : Window.getWindows())
-            {
-                UIRefresher.refreshAll();
-                SwingUtilities.updateComponentTreeUI(window);
-            }
-        });
-    }
-
-
-    public static void applyCustomUIManagerSettings(String settings) {
-        if (settings == null || settings.trim().isEmpty()) {
-            return;
-        }
-        String settings2 = settings.trim();
-        String[] pairs = settings2.split(",");
-        for (String pair : pairs) {
-            String[] keyValue = pair.trim().split(" ");
-            if (keyValue.length == 2) {
-                String key = keyValue[0].trim();
-                String value = keyValue[1].trim();
-                if (isValidColor(value)) {
-                    UIManager.put(key, Color.decode(value));
-                } else {
-                    JOptionPane.showMessageDialog(null, "Invalid color setting: " + value, "Invalid UI Setting", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid setting: " + pair, "Invalid UI Setting", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-    private static boolean isValidColor(String value) {
-        if (value.startsWith("#")) {
-            String hex = value.substring(1);
-            return hex.matches("[0-9a-fA-F]{6}|[0-9a-fA-F]{8}");
-        }
-        return false;
-    }
-
 
     public static Image recolorImage(Image originalImage, Color color) {
         int width = originalImage.getWidth(null);
@@ -124,87 +139,340 @@ public class Recolorer extends PluginPanel {
         g.setColor(color);
         g.fillRect(0, 0, width, height);
         g.dispose();
-
         return recoloredImage;
     }
 
-    static void forceDeepRecolor(Component comp, ThemeLiteConfig config) {
-        if (comp.getClass().getName().contains("ClientToolbarPanel") && config.titleBarToolbarColor() != null) // Title bar thing with screenshot, account, and chevron.
-        {
-            comp.setBackground(config.titleBarToolbarColor());
+    public static BufferedImage getScaledImage(Image srcImg, int w, int h) {
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
+    }
+    static Map<String, Image> originalIcons = new HashMap<>();
+    static void deepRecolor(Component comp, ThemeLiteConfig config) {
+        if (comp.getClass().getName().contains("ClientToolbarPanel")) {
+            Color bg;
+            if (config.titleBarToolbarColor() != null) {
+                bg = config.titleBarToolbarColor();
+            } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                bg = config.theme().getColor3();
+            } else {
+                bg = ColorScheme.CONTROL_COLOR;
+            }
+            comp.setBackground(bg);
         }
-        if (comp.getClass().getName().contains("JTabbedPane") && config.sidebarBackgroundColor() != null) { // Sidebar background
-            comp.setBackground(config.sidebarBackgroundColor());
+
+        if (comp.getClass().getName().contains("JTabbedPane")) {
+            Color bg;
+            if (config.sidebarBackgroundColor() != null) {
+                bg = config.sidebarBackgroundColor();
+            } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                bg = config.theme().getColor3();
+            } else {
+                bg = ColorScheme.CONTROL_COLOR;
+            }
+            comp.setBackground(bg);
+
+            if (comp instanceof JTabbedPane) {
+                JTabbedPane tabbedPane = (JTabbedPane) comp;
+
+                for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+                    Icon icon = tabbedPane.getIconAt(i);
+                    String tooltip = tabbedPane.getToolTipTextAt(i);
+
+                    if (icon instanceof ImageIcon && tooltip != null) {
+                        ImageIcon imageIcon = (ImageIcon) icon;
+
+                        originalIcons.putIfAbsent(tooltip, imageIcon.getImage());
+
+                        Image original = originalIcons.get(tooltip);
+                        int size = config.iconSize();
+                        Image scaled = original.getScaledInstance(size, size, Image.SCALE_AREA_AVERAGING);
+
+                        tabbedPane.setIconAt(i, new ImageIcon(scaled));
+                    }
+                }
+            }
         }
+
         if (comp instanceof AbstractButton) {
             AbstractButton button = (AbstractButton) comp;
-            if (button.getIcon() instanceof ImageIcon && config.inactiveButtons() != null) {
+            Component parent = button.getParent();
+
+            for (PropertyChangeListener l : button.getPropertyChangeListeners("icon")) {
+                button.removePropertyChangeListener("icon", l);
+            }
+
+            if (button.getIcon() instanceof ImageIcon) {
                 ImageIcon icon = (ImageIcon) button.getIcon();
-                Image recolored = recolorImage(icon.getImage(), config.inactiveButtons()); // Deselected things, favorites, toggles. Turns back to default when selected sometimes.
+                Color color;
+
+                if (parent != null && parent.getClass().getSimpleName().equals("ClientToolbarPanel")) {
+                    if (config.toolbarButtonsColor() != null) {
+                        color = config.toolbarButtonsColor();
+                    } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                        color = config.theme().getColor1();
+                    } else {
+                        color = Color.WHITE;
+                    }
+                } else {
+                    if (config.inactiveButtons() != null) {
+                        color = config.inactiveButtons();
+                    } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                        color = config.theme().getColor2();
+                    } else {
+                        color = new Color(92, 92, 92, 255);
+                    }
+                }
+
+                Image recolored = recolorImage(icon.getImage(), color);
                 button.setIcon(new ImageIcon(recolored));
             }
-            if (button.getSelectedIcon() instanceof ImageIcon && config.selectedButtons() != null) {
-                ImageIcon selectedIcon = (ImageIcon) button.getSelectedIcon();
-                Image recoloredSelected = recolorImage(selectedIcon.getImage(), config.selectedButtons());
-                button.setSelectedIcon(new ImageIcon(recoloredSelected));
+
+            if (button.getText() != null && button.getText().trim().equals("×")) {
+                ActionListener listener = e -> {
+                    Timer timer = new Timer(200, evt -> {
+                        SwingUtilities.invokeLater(() -> {
+                            for (Window window : Window.getWindows()) {
+                                OTFRecolor.OTFDeepRecolor(window, config);
+                            }
+                        });
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+                };
+                button.putClientProperty("xListener", listener);
+                button.addActionListener(listener);
             }
 
+            if (button.getToolTipText() != null) {
+                if (button.getToolTipText().equals("Sign out of RuneLite")) {
+                    if (button.getIcon() instanceof ImageIcon) {
+                        Color color;
+                        if (config.toolbarButtonsColor() != null) {
+                            color = config.toolbarButtonsColor();
+                        } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                            color = config.theme().getColor1();
+                        } else {
+                            color = new Color(225, 36, 36, 255);
+                        }
+                        Image recolored = recolorImage(((ImageIcon) button.getIcon()).getImage(), color);
+                        button.setIcon(new ImageIcon(recolored));
+                    }
+                } else if (button.getToolTipText().equals("Sign in to RuneLite")) {
+                    if (button.getIcon() instanceof ImageIcon) {
+                        Color color;
+                        if (config.toolbarButtonsColor() != null) {
+                            color = config.toolbarButtonsColor();
+                        } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                            color = config.theme().getColor1();
+                        } else {
+                            color = new Color(116, 184, 98, 255);
+                        }
+
+                        Image recolored = recolorImage(((ImageIcon) button.getIcon()).getImage(), color);
+                        button.setIcon(new ImageIcon(recolored));
+                    }
+                } else if (button.getToolTipText().equals("Edit plugin configuration")) {
+                    Color color;
+                    if (config.inactiveButtons() != null) {
+                        color = config.inactiveButtons();
+                    } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                        color = config.theme().getColor2();
+                    } else {
+                        color = Color.WHITE;
+                    }
+
+                    if (color != null && button.getIcon() instanceof ImageIcon) {
+                        Image recolored = recolorImage(((ImageIcon) button.getIcon()).getImage(), color);
+                        button.setIcon(new ImageIcon(recolored));
+                    }
+
+                    final long[] lastRecolorTime = {0};
+                    if (config.forceConfigPanelColor()) {
+                        button.addPropertyChangeListener("icon", evt -> { // Without this the config buttons switch to default when clicked.
+                            long now = System.currentTimeMillis();
+                            if (now - lastRecolorTime[0] > 250) {
+                                lastRecolorTime[0] = now;
+                                if (button.getIcon() instanceof ImageIcon) {
+                                    ImageIcon icon = (ImageIcon) button.getIcon();
+                                    Image recolored = Helper.recolorImage(icon.getImage(), color);
+                                    button.setIcon(new ImageIcon(recolored));
+                                    if (config.forceConfigPanelColor()){
+                                        SwingUtilities.invokeLater(() -> {
+                                            for (Window window : Window.getWindows())
+                                                OTFRecolor.OTFDeepRecolor(window, config); // This recolors the plugin config panel on the fly.
+                                        });
+
+                                    }
+
+                                }
+                            }
+                            button.repaint();
+                        });
+                    }
+                }
+            }
+
+            if (button.getSelectedIcon() instanceof ImageIcon) {
+                Color color;
+                if (config.selectedButtons() != null) {
+                    color = config.selectedButtons();
+                } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                    color = config.theme().getColor4();
+                } else {
+                    color = ColorScheme.BRAND_ORANGE;
+                }
+                Image recolored = recolorImage(((ImageIcon) button.getSelectedIcon()).getImage(), color);
+                button.setSelectedIcon(new ImageIcon(recolored));
+            }
             button.repaint();
         }
-        if (comp instanceof JLabel) {
-            JLabel label = (JLabel) comp;
-            if (config.sidePanelFontColor() != null){
-                label.setForeground(config.sidePanelFontColor());
-            }
-            Font defaultTitleFont = label.getFont();
 
-            if (defaultTitleFont != null) {
-                int currentStyle = defaultTitleFont.getStyle();
-                if (config.sidePanelBold()) {
-                    currentStyle = currentStyle | Font.BOLD;
+        if (comp instanceof JLabel && !comp.getClass().getName().contains("FlatTitlePane")) {
+            JLabel label = (JLabel) comp;
+            String path = "";
+            int panelCountBeforeLabel = 0; // Counts the JPanels to determine what is a config group. 1 or 3 JPanels deep means config item, 2 means section.
+            boolean countingPanels = true;
+            Component current = comp;
+
+            while (current != null) {
+                path = current.getClass().getSimpleName() + "/" + path;
+                if (countingPanels) {
+                    if (current.getClass().getSimpleName().equals("JPanel")) {
+                        panelCountBeforeLabel++;
+                    } else if (!current.getClass().getSimpleName().equals("JLabel")) {
+                        countingPanels = false;
+                    }
                 }
-                label.setFont(defaultTitleFont.deriveFont(currentStyle, (float) config.sidePanelFontSize()));
+                current = current.getParent();
+            }
+
+            Color color;
+            if (path.contains("ConfigPanel") && path.endsWith("JPanel/JLabel/") && panelCountBeforeLabel == 2) {
+                if (config.configSectionColor() != null) {
+                    color = config.configSectionColor();
+                } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                    color = config.theme().getColor5();
+                } else {
+                    color = ColorScheme.BRAND_ORANGE;
+                }
+            } else {
+                if (config.sidePanelFontColor() != null) {
+                    color = config.sidePanelFontColor();
+                } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                    color = config.theme().getColor1();
+                } else {
+                    color = Color.WHITE;
+                }
+            }
+
+            label.setForeground(color);
+
+            if (label.getFont() != null) {
+                int newStyle;
+
+                if (panelCountBeforeLabel == 2 || config.sidePanelBold()) {
+                    newStyle = Font.BOLD;
+                } else {
+                    newStyle = Font.PLAIN;
+                }
+
+                if (label.getFont().getStyle() != newStyle) {
+                    label.setFont(label.getFont().deriveFont(newStyle, (float) config.sidePanelFontSize()));
+                }
+                label.setFont(label.getFont().deriveFont(label.getFont().getStyle(), (float) config.sidePanelFontSize()));
             }
 
         }
 
-        if (comp instanceof JComponent && config.innerBorder() != null) {
+
+            if (comp instanceof JComponent && comp.getClass().getName().contains("JPanel")) {
             JComponent j = (JComponent) comp;
+
+            for (PropertyChangeListener l : j.getPropertyChangeListeners("border")) {
+                j.removePropertyChangeListener("border", l);
+            }
+
+            Color color;
+            if (config.innerBorder() != null) {
+                color = config.innerBorder();
+            } else if (config.theme() != ThemeLiteConfig.Themes.NONE) {
+                color = config.theme().getColor3();
+            } else {
+                color = ColorScheme.DARKER_GRAY_COLOR;
+            }
+
             Border b = j.getBorder();
-            j.addPropertyChangeListener("border", evt -> { // The border changes back to default colors when minimized and restored without this.
-                Border current = j.getBorder();
-                if (current instanceof MatteBorder) {
-                    MatteBorder mb = (MatteBorder) current;
-                    if (config.innerBorder() != null && !config.innerBorder().equals(mb.getMatteColor())) {
+            if (b instanceof MatteBorder) {
+                MatteBorder mb = (MatteBorder) b;
+                j.setBorder(BorderFactory.createMatteBorder(
+                        mb.getBorderInsets().top,
+                        mb.getBorderInsets().left,
+                        mb.getBorderInsets().bottom,
+                        mb.getBorderInsets().right,
+                        color
+                ));
+
+                final long[] lastRecolorTime = {0};
+                j.addPropertyChangeListener("border", evt -> { // Without this the border color reverts to normal everytime the client is minimized and restored.
+                    long now = System.currentTimeMillis();
+                    if (now - lastRecolorTime[0] > 70) {
+                        lastRecolorTime[0] = now;
                         j.setBorder(BorderFactory.createMatteBorder(
                                 mb.getBorderInsets().top,
                                 mb.getBorderInsets().left,
                                 mb.getBorderInsets().bottom,
                                 mb.getBorderInsets().right,
-                                config.innerBorder()
+                                color
                         ));
                     }
-                }
-            });
-            if (b instanceof MatteBorder) {
-                MatteBorder old = (MatteBorder) b;
-                j.setBorder(BorderFactory.createMatteBorder(
-                        old.getBorderInsets().top,
-                        old.getBorderInsets().left,
-                        old.getBorderInsets().bottom,
-                        old.getBorderInsets().right,
-                        config.innerBorder()
-                ));
+                });
             }
         }
-        if (comp instanceof Container)
-        {
-            Component[] children = ((Container) comp).getComponents();
-            for (Component child : children)
-            {
-                forceDeepRecolor(child, config);
+        if (comp.getClass().getName().contains("MaterialTab")) {
+            JComponent jc = (JComponent) comp;
+
+            if ("Configuration".equals(jc.getToolTipText()) && jc.getClientProperty("xListener") == null) {
+                ActionListener listener = e -> {
+                    Timer timer = new Timer(200, evt -> {
+                        SwingUtilities.invokeLater(() -> {
+                            for (Window window : Window.getWindows()) {
+                                OTFRecolor.OTFDeepRecolor(window, config);
+                            }
+                        });
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+                };
+
+                jc.putClientProperty("xListener", listener);
+
+                if (jc instanceof AbstractButton) {
+                    ((AbstractButton) jc).addActionListener(listener);
+                } else {
+                    MouseListener ml = new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            listener.actionPerformed(new ActionEvent(jc, ActionEvent.ACTION_PERFORMED, null));
+                        }
+                    };
+                    jc.addMouseListener(ml);
+                    jc.putClientProperty("xMouseListener", ml);
+                }
+            }
+        }
+        if (comp instanceof Container) {
+            for (Component child : ((Container) comp).getComponents()) {
+                deepRecolor(child, config);
             }
         }
     }
 }
-

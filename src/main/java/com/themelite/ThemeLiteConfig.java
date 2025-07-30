@@ -9,10 +9,10 @@ public interface ThemeLiteConfig extends Config
 {
 
 	enum Themes {
-		NONE("#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"), // Exit buttons, text, titlebar background, inactive icons, sidebar background, underline... Roughly.
+		NONE("#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"), // Exit buttons, text, titlebar background, inactive icons, config groups, underline... Roughly.
 		CANDY("#199AE2", "#BA40A0", "#BA40A0", "#199AE2", "#BA40A0", "#199AE2"),
 		SPOOKY("#DC8900", "#000000", "#000000", "#DC8900", "#000000", "#DC8900"),
-		TOXIC("#16EA27", "#A600DD", "#53076C", "#16EA27", "#53076C", "#16EA27"),
+		TOXIC("#16EA27", "#A600DD", "#53076C", "#16EA27", "#A600DD", "#16EA27"),
 		GUTHIX("#9D6B0F", "#9D6B0F", "#0B6100", "#0B6100", "#0B6100", "#9D6B0F"),
 		SARADOMIN("#DDD10F", "#0056CF", "#0056CF", "#DDD10F", "#0056CF", "#DDD10F"),
 		ZAMORAK("#AA0505", "#000000", "#000000", "#AA0505", "#000000", "#AA0505"),
@@ -110,7 +110,7 @@ public interface ThemeLiteConfig extends Config
 			keyName = "titleBarTextColor",
 			name = "Window Buttons",
 			description = "Color of the minimize, maximize, and exit buttons. Also title bar text color for sub-windows.",
-			position = 2,
+			position = 4,
 			section = titleBarSection
 	)
 	default Color titleBarTextColor()
@@ -133,8 +133,8 @@ public interface ThemeLiteConfig extends Config
 	@ConfigItem(
 			keyName = "titleBarInactiveBackground",
 			name = "Title Bar Background (I)",
-			description = "Color of the title bar when it's inactive.",
-			position = 4,
+			description = "Inactive/unfocused Color of the title bar.",
+			position = 2,
 			section = titleBarSection
 	)
 	default Color titleBarInactiveBackground()
@@ -145,7 +145,7 @@ public interface ThemeLiteConfig extends Config
 	@ConfigItem(
 			keyName = "titleBarInactiveTextColor",
 			name = "Title Bar Text (I)",
-			description = "Color of the text inside the inactive title bar.",
+			description = "Color of the text inside the inactive title bar and window buttons.",
 			position = 7,
 			section = titleBarSection
 	)
@@ -168,6 +168,19 @@ public interface ThemeLiteConfig extends Config
 	}
 
 	@ConfigItem(
+			keyName = "toolBarButtonsColor",
+			name = "Toolbar Buttons",
+			description = "Color of the buttons inside the title bar toolbar. (Screenshot, Account, Sidebar button housing)",
+			position = 10,
+			section = titleBarSection
+	)
+	default Color toolbarButtonsColor()
+	{
+		return null;
+	}
+
+	@Range (min = 5, max = 100)
+	@ConfigItem(
 			keyName = "titleBarFontSize",
 			name = "Title Bar Font Size",
 			description = "Font used in the title bar.",
@@ -176,7 +189,7 @@ public interface ThemeLiteConfig extends Config
 	)
 	default int titleBarFontSize()
 	{
-		return 14;
+		return 16;
 	}
 
 	@ConfigItem(
@@ -227,6 +240,31 @@ public interface ThemeLiteConfig extends Config
 		return null;
 	}
 
+	@Range(max = 100)
+	@ConfigItem(
+			keyName = "sidebarThickness",
+			name = "Sidebar thickness",
+			description = "Thickness of the sidebar/plugin toolbar. (Try big increments, max size: 100)",
+			position = 10,
+			section = sidebarSection
+	)
+	default int sidebarThickness()
+	{
+		return 5;
+	}
+
+	@Range(max = 100)
+	@ConfigItem(
+			keyName = "iconSize",
+			name = "Plugin Icon Size",
+			description = "The size of the plugin icons in the side bar.",
+			position = 12,
+			section = sidebarSection
+	)
+	default int iconSize()
+	{
+		return 16;
+	}
 
 //	@ConfigItem(  This breaks the sidebar opening/closing functionality. Maybe someday if I can fix that.
 //			keyName = "scrollingSidebar",
@@ -240,18 +278,6 @@ public interface ThemeLiteConfig extends Config
 //		return false;
 //	}
 
-	@Range(max = 100)
-	@ConfigItem(
-			keyName = "sidebarThickness",
-			name = "Sidebar thickness",
-			description = "Thickness of the sidebar/plugin toolbar. (Try big increments, max size: 100)",
-			position = 12,
-			section = sidebarSection
-	)
-	default int sidebarThickness()
-	{
-		return 5;
-	}
 
 	@ConfigItem(
 			keyName = "iconAlignment",
@@ -264,7 +290,18 @@ public interface ThemeLiteConfig extends Config
 	{
 		return false;
 	}
-	
+
+	@ConfigItem(
+			keyName = "iconOrder", // If someone can figure out the ! to hide thing, I'd be pretty grateful. :)
+			name = "Plugin Icon Order",
+			description = "Reorder sidebar icons, format is Tooltip:Position, separated by commas.<br>Example: Configuration:0,Hiscore:1,Info:9",
+			position = 20,
+			section = sidebarSection
+	)
+	default String iconOrder() {
+		return "";
+	}
+
 	@ConfigItem(
 			keyName = "sidePanelFontColor",
 			name = "Side Panel Font Color",
@@ -273,6 +310,18 @@ public interface ThemeLiteConfig extends Config
 			section = sidePanelSection
 	)
 	default Color sidePanelFontColor()
+	{
+		return null;
+	}
+
+	@ConfigItem(
+			keyName = "configSectionColor",
+			name = "Config Groups Font Color",
+			description = "Font color used in the config sections.",
+			position = 5,
+			section = sidePanelSection
+	)
+	default Color configSectionColor()
 	{
 		return null;
 	}
@@ -352,14 +401,17 @@ public interface ThemeLiteConfig extends Config
 		return 16;
 	}
 
+
 	@ConfigItem(
-			keyName = "customUIManagers", // This should only allow modifications to color keys, so users don't break too much stuff.
-			name = "Custom UIManager Strings",
-			description = "Enter UIManager settings in the format of 'TitlePane.background #A21212', separated by commas.<br> If you find something that you feel should be included in ThemeLite, please open an issue on GitHub.",
-			position = 2,
-			section = extraSection
-
+			keyName = "forceConfigPanelColor",
+			name = "Force Inner Panel Colors",
+			description = "This forcibly sets theme colors to the plugin config panels everytime they are opened. <br>This has the effect of a tiny moment where the text is first shown white, then changes.",
+			position = 22,
+			section = sidePanelSection
 	)
-	String customUIManagers();
-
+	default boolean forceConfigPanelColor()
+	{
+		return true; // I really like this on by default, the flash is barely noticeable.
+	}
+	String whyisthisneeded(); // For some reason needed for restoring original icon order on shutdown...
 }
