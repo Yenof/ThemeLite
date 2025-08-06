@@ -93,6 +93,12 @@ public class Helper extends PluginPanel {
                 for (String entry : config.iconOrder().split(",")) {
                     String[] parts = entry.trim().split(":");
                     if (parts.length == 2) {
+                        if(parts[0].trim().equals("Configuration")){ // If the config button isn't #1, config profiles break.
+                            parts[0] = "don'tMoveTheConfigButton";
+                        }
+                        if(parts[1].contains("-")){
+                            parts[1] = String.valueOf(0);
+                        }
                         iconPosition.put(parts[0].trim(), parts[1].trim());
                     }
                 }

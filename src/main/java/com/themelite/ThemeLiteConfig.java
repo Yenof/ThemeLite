@@ -294,7 +294,7 @@ public interface ThemeLiteConfig extends Config
 	@ConfigItem(
 			keyName = "iconOrder", // If someone can figure out the ! to hide thing, I'd be pretty grateful. :)
 			name = "Plugin Icon Order",
-			description = "Reorder sidebar icons, format is Tooltip:Position, separated by commas.<br>Example: Configuration:0,Hiscore:1,Info:9",
+			description = "Reorder sidebar icons, format is Tooltip:Position, separated by commas.<br>Example: Notes:0,Hiscore:1,Info:2<br>No negatives, and can't move the Configuration button",
 			position = 20,
 			section = sidebarSection
 	)
