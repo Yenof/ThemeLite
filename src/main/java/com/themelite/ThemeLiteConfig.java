@@ -87,14 +87,6 @@ public interface ThemeLiteConfig extends Config
 	)
 	String sidePanelSection = "sidePanel";
 
-	@ConfigSection(
-			name = "Extra",
-			description = "Extra settings, oooooo!",
-			closedByDefault = true,
-			position = 15
-	)
-	String extraSection = "extra";
-
 	@ConfigItem(
 			keyName = "themes",
 			name = "Theme",
