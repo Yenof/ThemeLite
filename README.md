@@ -23,7 +23,7 @@ Please reach out to the ThemeLite Discord, or ThemeLite GitHub for support or co
 
 
 <br><br>
-*Currently, while switching RuneLite config profiles ThemeLite has been known to cause delays. (do not switch profiles in unsafe areas.)<br>
+*When switching RuneLite config profiles, ThemeLite has been known to cause a delay. (do not switch profiles in unsafe areas.)<br>
 *ThemeLite requires RuneLite's Custom Chrome for many things, to enable go to: `Config > RuneLite > Enable custom window chrome`.
 
 
@@ -46,7 +46,7 @@ Titlebar<br>
 Sidebar<br>
 Sidepanel<br>
 
-_*Hovering over config options with the cursor will display these tooltips with sometimes helpful information._
+_*Hovering over config options with the cursor will display tooltips with sometimes helpful information._
 <br>
 
 <br>
@@ -97,7 +97,7 @@ Scroll Bar Color – Color of the scroll bar 'thumb' (the draggable bit). (Scrol
 Scroll Bar Background Color – Color of the scroll bar background. (ScrollBar.track)<br>
 Side Panel Bold Font – Font used in the plugin list. (And sometimes plugin configs).<br>
 Side Panel Font Size – Font size used in the plugin list. (And sometimes plugin configs).<br>
-Force Inner Panel Colors - This forcibly sets theme colors to the plugin config panels everytime they are opened. This has the effect of a tiny moment where the text is first shown white, then changes.
+Force Inner Panel Colors - This forcibly sets theme colors to the plugin config panels everytime they are opened. This has the effect of a brief moment where the text is first shown white, then changes, but is unnoticable on most systems.
 
 <br>
 
@@ -106,7 +106,7 @@ Force Inner Panel Colors - This forcibly sets theme colors to the plugin config 
 
 <br>
 
-# Contributing: 
+# Contributing:
 
 ThemeLite is intended as a community project, if you find a way ThemeLite can be improved, please feel free to make a PR.<br>
 I try to keep the issues tracker up to date if you are looking for something to work on.<br>
@@ -121,12 +121,12 @@ If you are reading this then ThemeLite is early in development; while I have tri
 
 Theme sharing hopefully coming someday.
 <br>
- 
+
 <br>
 
 Issues can be posted to Github Issues.
 <br>
-Suggestions can be posted to Github Discussions. 
+Suggestions can be posted to Github Discussions.
 <br>
 or
 <br>
